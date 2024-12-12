@@ -1,4 +1,7 @@
 **PROJECT DIARY**
+<ins>12/12/2024:
+•   Completed interim report and added a few more tests
+
 <ins>1-6/12/2024:
 
 research made and code completed:
