@@ -7,7 +7,11 @@ RSA class completed functionality:
 
 
 •   implemented prime number generation using the bigintegers inbuilt function
+
+
 •   tested each generated number and utilised them in RSA encryption
+
+
 •   allowed encryption to work on both capital and non capital letters along with punctuation marks
 
 
@@ -15,6 +19,8 @@ commits:
 
 
 • committed to the product folder all functions listed above
+
+
 • deleted prime generation branch as workload was way too small for a whole branch
 
 
