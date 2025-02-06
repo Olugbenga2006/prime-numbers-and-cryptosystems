@@ -34,11 +34,19 @@ commits:
 research made and code completed:
 
 •   Researched and documented how rsa works
+
+
 •   Researched fermats and miller-rabins primality tests
+
+
 •   finished primality testing for up to 300 digits
+
+
 commits:
 
 • committed to the documents folder, how rsa works and primality tests.
+
+
 • commited final primality testing
 
 <ins>6-8/11/2024:
