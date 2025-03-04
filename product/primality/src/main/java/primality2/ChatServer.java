@@ -2,12 +2,13 @@ package primality2;
 
 import java.io.*;
 import java.net.*;
+import java.math.BigInteger;
 
 public class ChatServer {
   public static void main(String[] args) {
     try {
       // Generate RSA keys
-      RSA rsa = new RSA(512, 5); // testing using simple 512-bit keys
+      RSA rsa = new RSA(2048, 20); // testing using simple 512-bit keys
       System.out.println("Server RSA keys generated.");
 
       // Start server socket

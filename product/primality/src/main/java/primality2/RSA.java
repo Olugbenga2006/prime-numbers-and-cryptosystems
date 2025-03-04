@@ -58,6 +58,7 @@ public class RSA {
     numberToCharMap.put(66, ')');
   }
 
+
   // Constructor to initialize RSA key generation
   public RSA(int bitLength, int millerRabinIterations) {
     // Generate two large probable primes using BigInteger.probablePrime
@@ -86,55 +87,58 @@ public class RSA {
   private BigInteger generateAndTestPrime(int bitLength, int millerRabinIterations) {
     BigInteger prime;
     Random random = new Random();
-
-    do {
-      // Generate a probable prime using BigInteger.probablePrime
-      prime = BigInteger.probablePrime(bitLength, random);
-
-      // Test the prime using the Miller-Rabin test
-    } while (!LargerPrimes.isPrime(prime, millerRabinIterations));
+    prime = BigInteger.probablePrime(bitLength, random);
 
     return prime;
   }
 
-//Method to map a word or sentence to a number
+  //Method to map a word or sentence to a number
   public BigInteger mapToNumber(String text) {
-      StringBuilder numberString = new StringBuilder();
+    StringBuilder numberString = new StringBuilder();
 
-      for (char c : text.toCharArray()) {
-          if (charToNumberMap.containsKey(c)) {
-              int number = charToNumberMap.get(c);
-              numberString.append(String.format("%02d", number)); // Ensure two digits per character
-          } else {
-              throw new IllegalArgumentException("Character not supported: " + c);
-          }
+    for (char c : text.toCharArray()) {
+      if (charToNumberMap.containsKey(c)) {
+        int number = charToNumberMap.get(c);
+        numberString.append(String.format("%02d", number)); // Ensure two digits per character
+      } else {
+        throw new IllegalArgumentException("Character not supported: " + c);
       }
+    }
 
-      return new BigInteger(numberString.toString());
+    return new BigInteger(numberString.toString());
   }
 
   // Method to map a number back to a word or sentence
   public String mapToText(BigInteger number) {
-      String numberString = number.toString();
-      StringBuilder text = new StringBuilder();
+    String numberString = number.toString();
+    StringBuilder text = new StringBuilder();
 
-      // Ensure the number string has an even length
-      if (numberString.length() % 2 != 0) {
-          numberString = "0" + numberString; // Pad with a leading zero if necessary
+    // Ensure the number string has an even length
+    if (numberString.length() % 2 != 0) {
+      numberString = "0" + numberString; // Pad with a leading zero if necessary
+    }
+
+    for (int i = 0; i < numberString.length(); i += 2) {
+      int num = Integer.parseInt(numberString.substring(i, i + 2));
+      if (numberToCharMap.containsKey(num)) {
+        text.append(numberToCharMap.get(num));
+      } else {
+        throw new IllegalArgumentException("Number not mapped to a character: " + num);
       }
+    }
 
-      for (int i = 0; i < numberString.length(); i += 2) {
-          int num = Integer.parseInt(numberString.substring(i, i + 2));
-          if (numberToCharMap.containsKey(num)) {
-              text.append(numberToCharMap.get(num));
-          } else {
-              throw new IllegalArgumentException("Number not mapped to a character: " + num);
-          }
-      }
-
-      return text.toString();
+    return text.toString();
+  }
+  
+  // Setter method for modulus N
+  public void setModulusN(BigInteger mod_N) {
+    this.mod_N = mod_N;
   }
 
+  // Setter method for public key E
+  public void setPublicKeyE(BigInteger public_KeyE) {
+    this.public_KeyE = public_KeyE;
+  }
 
   // Getter methods for the keys and primes
   public BigInteger getPrimeP() {
@@ -156,7 +160,7 @@ public class RSA {
   public BigInteger getPrivateKeyD() {
     return private_KeyD;
   }
-
+  
   // Method to encrypt a message using the public key
   public BigInteger encrypt(BigInteger message) {
     return message.modPow(public_KeyE, mod_N);

@@ -20,25 +20,18 @@ public class ChatClient {
       System.out.println("Connected to server. Public key received.");
 
       // Create an RSA object with the received public key
-      RSA rsa = new RSA(512, 5);
-      rsa = new RSA(512, 5) {
-        @Override
-        public BigInteger getPublicKeyE() {
-          return publicKeyE;
-        }
+      RSA rsa = new RSA(2048, 20);
 
-        @Override
-        public BigInteger getModulusN() {
-          return modulusN;
-        }
-      };
+      // Override the modulus N and public key E with the values received from the server
+      rsa.setModulusN(modulusN);
+      rsa.setPublicKeyE(publicKeyE);
 
       // Chat loop
       while (true) {
         System.out.print("You: ");
         String message = userInput.readLine();
 
-        // a way to exit chat
+        // A way to exit chat
         if (message.equalsIgnoreCase("exit")) break;
 
         // Encrypt message and send
