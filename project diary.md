@@ -1,5 +1,30 @@
 **PROJECT DIARY**
 
+
+
+<ins> 7/3/2025:
+
+
+JAVA socket class which enables encrypted conversation between vlient and server:
+
+
+•   simply created the two classes and link them together using a socket
+
+
+•   had troubles compiling the code and therefore changed part of the classes which made the encryption fall apart
+
+
+•   found out i had to compile certain files first before others so they could function. also a setter class for another logic error
+
+commits:
+
+
+• commited original ChatServer class and CHatClient class
+
+
+• commit to fix previous mistakes and update to Readme to show how to run both classes properly
+
+
 <ins>5/2/2025:
 
 
