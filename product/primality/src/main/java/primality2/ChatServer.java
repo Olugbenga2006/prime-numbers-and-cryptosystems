@@ -8,7 +8,7 @@ public class ChatServer {
   public static void main(String[] args) {
     try {
       // Generate RSA keys
-      RSA rsa = new RSA(2048, 20); // testing using simple 512-bit keys
+      RSA rsa = new RSA(2048, 20);
       System.out.println("Server RSA keys generated.");
 
       // Start server socket
@@ -17,9 +17,15 @@ public class ChatServer {
       Socket socket = serverSocket.accept();
       System.out.println("Client has been connected.");
 
-      //  input and output streams
+      // Perform Diffie-Hellman key exchange
+      DiffieHellmanKeyGenerator dh = new DiffieHellmanKeyGenerator(2048);
+      BigInteger serverPublicKey = dh.getPublicKey();
       BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+      BigInteger clientPublicKey = new BigInteger(input.readLine());
+      output.println(serverPublicKey);
+      BigInteger sharedSecret = dh.computeSharedKey(clientPublicKey);
+      System.out.println("Shared secret established.");
 
       // Send public key (E and N) to the client
       output.println(rsa.getPublicKeyE() + "," + rsa.getModulusN());

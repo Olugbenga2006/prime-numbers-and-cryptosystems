@@ -1,5 +1,6 @@
 package primality2;
 
+
 import java.io.*;
 import java.math.BigInteger;
 import java.net.*;
@@ -13,6 +14,14 @@ public class ChatClient {
       PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
       BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 
+      // Perform Diffie-Hellman key exchange
+      DiffieHellmanKeyGenerator dh = new DiffieHellmanKeyGenerator(2048);
+      BigInteger clientPublicKey = dh.getPublicKey();
+      output.println(clientPublicKey);
+      BigInteger serverPublicKey = new BigInteger(input.readLine());
+      BigInteger sharedSecret = dh.computeSharedKey(serverPublicKey);
+      System.out.println("Shared secret established.");
+
       // Receive public key from server
       String[] keyParts = input.readLine().split(",");
       BigInteger publicKeyE = new BigInteger(keyParts[0]);
@@ -21,8 +30,6 @@ public class ChatClient {
 
       // Create an RSA object with the received public key
       RSA rsa = new RSA(2048, 20);
-
-      // Override the modulus N and public key E with the values received from the server
       rsa.setModulusN(modulusN);
       rsa.setPublicKeyE(publicKeyE);
 
@@ -30,11 +37,9 @@ public class ChatClient {
       while (true) {
         System.out.print("You: ");
         String message = userInput.readLine();
-
-        // A way to exit chat
         if (message.equalsIgnoreCase("exit")) break;
 
-        // Encrypt message and send
+        // Encrypt message with shared secret and send
         String encryptedMessage = rsa.encryptText(message);
         output.println(encryptedMessage);
         System.out.println("Sent (Encrypted): " + encryptedMessage);
