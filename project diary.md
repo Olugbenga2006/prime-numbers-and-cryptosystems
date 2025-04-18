@@ -1,5 +1,20 @@
 **PROJECT DIARY**
 
+<ins> 19/3/2025:
+
+
+diffie hellman key exchange protocol implemented
+
+
+•   diffiehellmankeygenerator class to give a secret shared key between the client and the server.
+
+
+
+commits:
+
+
+• created diffiehellmankeygenerator class
+
 
 
 <ins> 7/3/2025:
