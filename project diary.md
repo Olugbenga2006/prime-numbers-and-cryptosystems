@@ -1,5 +1,18 @@
 **PROJECT DIARY**
 
+
+<ins> 23/4/2025:
+
+
+implemented all base functionality and finished cleaning up
+created a GUI for both the classes CHatServer and Chatclient
+
+commits:
+
+
+• fixing readme and adding javadoc
+
+
 <ins> 19/3/2025:
 
 
