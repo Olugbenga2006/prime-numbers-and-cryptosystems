@@ -18,6 +18,8 @@ then on another terminal only launch the chatclient class. you have to be in the
 then you can communicate on the client side and the server will receive your messages. you can also see the encrypted messages.
 
 
+to break send a message "exit"
+
 
 
 
