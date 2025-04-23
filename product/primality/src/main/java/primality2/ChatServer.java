@@ -4,16 +4,31 @@ import java.io.*;
 import java.net.*;
 import java.math.BigInteger;
 
+/**
+ * ChatServer generates RSA keys, performs a Diffie-Hellman key exchange with the client,
+ * receives encrypted messages, decrypts them using RSA, and prints them to the console.
+ */
 public class ChatServer {
+
+  /**
+   * Entry point for the server application.
+   * 
+   * This method:
+   * - Generates RSA keys
+   * - Waits for a client to connect
+   * - Performs a Diffie-Hellman key exchange to establish a shared secret
+   * - Sends the RSA public key to the client
+   * - Receives and decrypts encrypted messages from the client
+   */
   public static void main(String[] args) {
     try {
       // Generate RSA keys
       RSA rsa = new RSA(2048, 20);
       System.out.println("Server RSA keys generated.");
 
-      // Start server socket
+      // Set up server socket
       ServerSocket serverSocket = new ServerSocket(3000);
-      System.out.println("Server started. Now Waiting for client...");
+      System.out.println("Server started. Now waiting for client...");
       Socket socket = serverSocket.accept();
       System.out.println("Client has been connected.");
 
@@ -27,11 +42,11 @@ public class ChatServer {
       BigInteger sharedSecret = dh.computeSharedKey(clientPublicKey);
       System.out.println("Shared secret established.");
 
-      // Send public key (E and N) to the client
+      // Send RSA public key (E, N) to client
       output.println(rsa.getPublicKeyE() + "," + rsa.getModulusN());
       System.out.println("Public key has been sent to client.");
 
-      // Receive encrypted messages and decrypt them
+      // Receive and decrypt messages from client
       while (true) {
         String encryptedMessage = input.readLine();
         if (encryptedMessage == null) break;
@@ -40,7 +55,7 @@ public class ChatServer {
         System.out.println("Client: " + decryptedMessage);
       }
 
-      // Close
+      // Close connections
       socket.close();
       serverSocket.close();
     } catch (Exception e) {
